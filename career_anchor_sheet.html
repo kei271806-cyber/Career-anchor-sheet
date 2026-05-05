@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>価値観・動機分析シート｜キャリアアンカー診断</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --border: #e8e5dc;
+  --border-soft: #f0ede4;
+  --text: #1a1917;
+  --text-muted: #7a7870;
+  --text-hint: #b0ada4;
+  --accent: #1a1917;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+.page { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+/* Hero */
+.hero {
+  border-bottom: 0.5px solid var(--border);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-hint);
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+.hero p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 520px;
+}
+.hero-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-muted);
+  background: var(--surface);
+}
+
+/* Progress */
+.prog-wrap { margin-bottom: 2.5rem; }
+.prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.prog-label { font-size: 12px; color: var(--text-muted); }
+.prog-val { font-size: 12px; color: var(--text-muted); }
+.prog-bg { height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--text); border-radius: 1px; transition: width .3s ease; }
+
+/* Section */
+.section { margin-bottom: 2.5rem; }
+.sec-hd {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid var(--border);
+}
+.sec-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.sec-title { font-size: 14px; font-weight: 500; color: var(--text); }
+.sec-sub { font-size: 11px; color: var(--text-hint); margin-top: 2px; letter-spacing: .04em; }
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 8px;
+}
+.q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.q-num { font-size: 10px; color: var(--text-hint); font-weight: 500; letter-spacing: .06em; }
+.q-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.q-text { font-size: 13px; color: var(--text); line-height: 1.65; margin-bottom: 12px; }
+
+/* Options */
+.opts { display: flex; flex-direction: column; gap: 5px; }
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid transparent;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.opt:hover { background: var(--bg); }
+.opt:has(input:checked) {
+  border-color: var(--border);
+  background: var(--bg);
+}
+.opt input[type="radio"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--text);
+  width: 14px;
+  height: 14px;
+}
+.opt-text { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+.opt:has(input:checked) .opt-text { color: var(--text); }
+
+/* Analyze button */
+.btn-wrap { margin-top: 2.5rem; }
+.btn-analyze {
+  width: 100%;
+  padding: 14px;
+  background: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  letter-spacing: .03em;
+  transition: opacity .15s;
+}
+.btn-analyze:hover { opacity: .85; }
+.btn-analyze:disabled { opacity: .4; cursor: default; }
+
+/* Result */
+.result { display: none; margin-top: 3rem; }
+.result.show { display: block; }
+.result-hero {
+  border-top: 0.5px solid var(--border);
+  padding-top: 2.5rem;
+  margin-bottom: 2rem;
+}
+.result-eyebrow {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-hint);
+  margin-bottom: 8px;
+}
+.result-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.result-sub { font-size: 13px; color: var(--text-muted); }
+
+/* Priority list */
+.block {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 12px;
+}
+.block-title { font-size: 12px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; }
+
+.priority-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 0.5px solid var(--border-soft);
+}
+.priority-row:last-child { border-bottom: none; }
+.pr-rank {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.pr-info { flex: 1; }
+.pr-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.pr-en { font-size: 11px; color: var(--text-hint); margin-top: 1px; }
+.pr-bar-wrap { width: 80px; }
+.pr-bar-bg { height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden; }
+.pr-bar-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
+.pr-score { font-size: 12px; color: var(--text-muted); min-width: 32px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Top anchor */
+.top-anchor {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 12px;
+}
+.top-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.top-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.top-desc { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+/* Motivation */
+.moti-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border-soft);
+}
+.moti-item:last-child { border-bottom: none; }
+.moti-n {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-hint);
+  min-width: 20px;
+  padding-top: 2px;
+}
+.moti-t { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+/* Advice */
+.advice-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  margin-bottom: 6px;
+}
+.advice-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.advice-t { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+/* Print note */
+.print-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-hint);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 0.5px solid var(--border);
+}
+
+@media print {
+  body { background: #fff; }
+  .page { padding: 1rem; }
+  .btn-wrap, .print-note { display: none; }
+  .result { display: block !important; }
+  .card { break-inside: avoid; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 26px; }
+  .pr-bar-wrap { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <div class="hero-eyebrow">Motivation Analysis</div>
+  <h1>価値観・動機<br>分析シート</h1>
+  <p>キャリアアンカー理論をもとに、あなたの価値観の構造・優先順位・モチベーションの動機を分析します。全50問・選択式。</p>
+  <div class="hero-tags">
+    <span class="tag">全50問</span>
+    <span class="tag">所要時間 約15分</span>
+    <span class="tag">選択式のみ</span>
+    <span class="tag">キャリアアンカー8分野</span>
+  </div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-row">
+    <span class="prog-label">回答進捗</span>
+    <span class="prog-val" id="prog-txt">0 / 50</span>
+  </div>
+  <div class="prog-bg"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+</div>
+
+<!-- Section 1 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#E1F5EE;color:#0F6E56">1</div>
+    <div><div class="sec-title">専門性への志向</div><div class="sec-sub">Technical / Functional Competence</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q01</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">仕事で最も達成感を感じる瞬間はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="TF5" onchange="tick()"><span class="opt-text">自分の専門スキルを駆使して難しい問題を解決したとき</span></label>
+      <label class="opt"><input type="radio" name="q1" value="GM3" onchange="tick()"><span class="opt-text">チーム全体の成果として目標を達成したとき</span></label>
+      <label class="opt"><input type="radio" name="q1" value="AU3" onchange="tick()"><span class="opt-text">自分のやり方・ペースで仕事を進められたとき</span></label>
+      <label class="opt"><input type="radio" name="q1" value="SE3" onchange="tick()"><span class="opt-text">安定した環境の中で確実に成果を積み重ねたとき</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q02</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">「この人は仕事ができる」と思われたいとき、何を見せたいですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="TF5" onchange="tick()"><span class="opt-text">誰にも負けない専門知識・技術力</span></label>
+      <label class="opt"><input type="radio" name="q2" value="GM3" onchange="tick()"><span class="opt-text">事業全体を俯瞰した判断力とリーダーシップ</span></label>
+      <label class="opt"><input type="radio" name="q2" value="EN3" onchange="tick()"><span class="opt-text">ゼロから新しい価値を生み出す発想力</span></label>
+      <label class="opt"><input type="radio" name="q2" value="SV3" onchange="tick()"><span class="opt-text">社会や人の役に立っているという実績</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q03</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">理想のキャリアゴールに最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q3" value="TF5" onchange="tick()"><span class="opt-text">その分野の第一人者・エキスパートと認められる</span></label>
+      <label class="opt"><input type="radio" name="q3" value="GM5" onchange="tick()"><span class="opt-text">組織を率いる責任ある管理職・役員になる</span></label>
+      <label class="opt"><input type="radio" name="q3" value="AU5" onchange="tick()"><span class="opt-text">誰にも縛られない自由な働き方を手に入れる</span></label>
+      <label class="opt"><input type="radio" name="q3" value="SE5" onchange="tick()"><span class="opt-text">長期的に安定したキャリアを築く</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q04</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">スキル習得について最も近い考え方はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q4" value="TF5" onchange="tick()"><span class="opt-text">一つの領域を徹底的に深堀りしたい</span></label>
+      <label class="opt"><input type="radio" name="q4" value="GM3" onchange="tick()"><span class="opt-text">幅広い知識を持つゼネラリストになりたい</span></label>
+      <label class="opt"><input type="radio" name="q4" value="EN3" onchange="tick()"><span class="opt-text">新しいことを次々と学び続けたい</span></label>
+      <label class="opt"><input type="radio" name="q4" value="CH3" onchange="tick()"><span class="opt-text">困難な局面で活きる実戦的なスキルを身につけたい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q05</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">管理職へのキャリアパスを打診された場合、どう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q5" value="TF5" onchange="tick()"><span class="opt-text">専門職として現場にいる方が自分らしいと感じる</span></label>
+      <label class="opt"><input type="radio" name="q5" value="GM5" onchange="tick()"><span class="opt-text">ぜひ挑戦したい、それが目指す姿だ</span></label>
+      <label class="opt"><input type="radio" name="q5" value="AU3" onchange="tick()"><span class="opt-text">裁量が増えるなら前向きに考えたい</span></label>
+      <label class="opt"><input type="radio" name="q5" value="SE3" onchange="tick()"><span class="opt-text">責任の重さとのバランスを慎重に考えたい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q06</span><span class="q-tag" style="background:#E1F5EE;color:#0F6E56">専門性</span></div>
+    <div class="q-text">あなたが最もモチベーションを感じる仕事の種類はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q6" value="TF5" onchange="tick()"><span class="opt-text">高い専門性・技術力が問われる仕事</span></label>
+      <label class="opt"><input type="radio" name="q6" value="CH5" onchange="tick()"><span class="opt-text">誰も解いたことがない難問に挑む仕事</span></label>
+      <label class="opt"><input type="radio" name="q6" value="SV5" onchange="tick()"><span class="opt-text">人や社会に直接貢献できる仕事</span></label>
+      <label class="opt"><input type="radio" name="q6" value="LS5" onchange="tick()"><span class="opt-text">仕事以外の生活も充実させられる仕事</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#E6F1FB;color:#185FA5">2</div>
+    <div><div class="sec-title">経営・リーダーシップへの志向</div><div class="sec-sub">General Managerial Competence</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q07</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">チームで仕事をするとき、自分が最も自然に担う役割はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q7" value="GM5" onchange="tick()"><span class="opt-text">全体の方向性を決め、メンバーをまとめる</span></label>
+      <label class="opt"><input type="radio" name="q7" value="TF3" onchange="tick()"><span class="opt-text">専門知識でチームを技術的に支える</span></label>
+      <label class="opt"><input type="radio" name="q7" value="EN3" onchange="tick()"><span class="opt-text">新しいアイデアや視点を持ち込む</span></label>
+      <label class="opt"><input type="radio" name="q7" value="SV3" onchange="tick()"><span class="opt-text">メンバーのサポートやフォローをする</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q08</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">仕事での意思決定について、最も近い考えはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q8" value="GM5" onchange="tick()"><span class="opt-text">組織全体の利益を優先して大局的に判断したい</span></label>
+      <label class="opt"><input type="radio" name="q8" value="TF3" onchange="tick()"><span class="opt-text">専門的な知見に基づいて正確な判断をしたい</span></label>
+      <label class="opt"><input type="radio" name="q8" value="AU3" onchange="tick()"><span class="opt-text">自分の判断で自律的に決定できる環境がよい</span></label>
+      <label class="opt"><input type="radio" name="q8" value="CH3" onchange="tick()"><span class="opt-text">不確実な状況でも素早く決断して動きたい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q09</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">組織の中で最も誇りを感じる場面はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q9" value="GM5" onchange="tick()"><span class="opt-text">自分のリーダーシップで組織が成長したとき</span></label>
+      <label class="opt"><input type="radio" name="q9" value="TF3" onchange="tick()"><span class="opt-text">自分の専門知識が問題解決の決め手になったとき</span></label>
+      <label class="opt"><input type="radio" name="q9" value="EN3" onchange="tick()"><span class="opt-text">自分が発案したアイデアが実現したとき</span></label>
+      <label class="opt"><input type="radio" name="q9" value="SV3" onchange="tick()"><span class="opt-text">自分の関わりで誰かの状況が良くなったとき</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q10</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">「成功した仕事人」のイメージに最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q10" value="GM5" onchange="tick()"><span class="opt-text">大きな組織を率いて事業を成長させた経営者</span></label>
+      <label class="opt"><input type="radio" name="q10" value="TF3" onchange="tick()"><span class="opt-text">業界随一の技術・知識を持つスペシャリスト</span></label>
+      <label class="opt"><input type="radio" name="q10" value="EN3" onchange="tick()"><span class="opt-text">自分のビジョンで事業を起こした起業家</span></label>
+      <label class="opt"><input type="radio" name="q10" value="LS3" onchange="tick()"><span class="opt-text">仕事も私生活も充実させながら活躍する人</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q11</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">昇進・昇格についてどのように考えていますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q11" value="GM5" onchange="tick()"><span class="opt-text">より大きな責任と権限を持ちたいので積極的に目指す</span></label>
+      <label class="opt"><input type="radio" name="q11" value="TF3" onchange="tick()"><span class="opt-text">役職より専門性・実力で評価されたい</span></label>
+      <label class="opt"><input type="radio" name="q11" value="AU3" onchange="tick()"><span class="opt-text">裁量が増えるなら昇進は悪くないが必須ではない</span></label>
+      <label class="opt"><input type="radio" name="q11" value="SE3" onchange="tick()"><span class="opt-text">ポジションよりも安定と待遇の改善を優先したい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q12</span><span class="q-tag" style="background:#E6F1FB;color:#185FA5">経営</span></div>
+    <div class="q-text">複数部門にまたがるプロジェクトに関わるとき、どんな立場を好みますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q12" value="GM5" onchange="tick()"><span class="opt-text">全体を統括するプロジェクトマネージャーポジション</span></label>
+      <label class="opt"><input type="radio" name="q12" value="TF3" onchange="tick()"><span class="opt-text">特定領域の専門家として参加するメンバーポジション</span></label>
+      <label class="opt"><input type="radio" name="q12" value="CH3" onchange="tick()"><span class="opt-text">困難な課題を担う挑戦的なポジション</span></label>
+      <label class="opt"><input type="radio" name="q12" value="SV3" onchange="tick()"><span class="opt-text">チームが動きやすくなるサポートポジション</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#FAEEDA;color:#854F0B">3</div>
+    <div><div class="sec-title">自律性・独立性への志向</div><div class="sec-sub">Autonomy / Independence</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q13</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">仕事環境について最も重要だと思うことはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q13" value="AU5" onchange="tick()"><span class="opt-text">自分のやり方とペースで仕事を進められる自由</span></label>
+      <label class="opt"><input type="radio" name="q13" value="GM3" onchange="tick()"><span class="opt-text">成果が正当に評価される公正なしくみ</span></label>
+      <label class="opt"><input type="radio" name="q13" value="SE3" onchange="tick()"><span class="opt-text">長期的に安心して働ける環境の安定性</span></label>
+      <label class="opt"><input type="radio" name="q13" value="SV3" onchange="tick()"><span class="opt-text">仕事を通じて社会に貢献できていること</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q14</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">組織のルールや規則についてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q14" value="AU5" onchange="tick()"><span class="opt-text">できる限り制約を減らして自由に動きたい</span></label>
+      <label class="opt"><input type="radio" name="q14" value="GM3" onchange="tick()"><span class="opt-text">組織の秩序として必要なものだと思う</span></label>
+      <label class="opt"><input type="radio" name="q14" value="SE3" onchange="tick()"><span class="opt-text">明確なルールがある方が安心して動ける</span></label>
+      <label class="opt"><input type="radio" name="q14" value="TF3" onchange="tick()"><span class="opt-text">合理的なルールには従うが、不合理なものは変えたい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q15</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">理想の働き方に最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q15" value="AU5" onchange="tick()"><span class="opt-text">時間・場所・方法すべて自分でコントロールする</span></label>
+      <label class="opt"><input type="radio" name="q15" value="LS3" onchange="tick()"><span class="opt-text">仕事とプライベートのバランスが取れている</span></label>
+      <label class="opt"><input type="radio" name="q15" value="CH3" onchange="tick()"><span class="opt-text">常に新しい刺激と挑戦がある環境</span></label>
+      <label class="opt"><input type="radio" name="q15" value="SE3" onchange="tick()"><span class="opt-text">長期雇用が保証された安定した職場</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q16</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">上司からの細かい指示・管理についてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q16" value="AU5" onchange="tick()"><span class="opt-text">窮屈に感じる。結果だけ見てほしい</span></label>
+      <label class="opt"><input type="radio" name="q16" value="GM3" onchange="tick()"><span class="opt-text">適切なフィードバックなら歓迎する</span></label>
+      <label class="opt"><input type="radio" name="q16" value="SE3" onchange="tick()"><span class="opt-text">方向性が明確になるので安心感がある</span></label>
+      <label class="opt"><input type="radio" name="q16" value="TF3" onchange="tick()"><span class="opt-text">専門判断を尊重してもらえるなら問題ない</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q17</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">フリーランス・独立という選択肢についてどう思いますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q17" value="AU5" onchange="tick()"><span class="opt-text">非常に魅力的。いつか実現したい</span></label>
+      <label class="opt"><input type="radio" name="q17" value="EN3" onchange="tick()"><span class="opt-text">自分の事業を作るなら独立も選択肢に入る</span></label>
+      <label class="opt"><input type="radio" name="q17" value="SE3" onchange="tick()"><span class="opt-text">安定性が失われるリスクが気になる</span></label>
+      <label class="opt"><input type="radio" name="q17" value="TF3" onchange="tick()"><span class="opt-text">専門性を活かせるならありだが組織の方が動きやすい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q18</span><span class="q-tag" style="background:#FAEEDA;color:#854F0B">自律</span></div>
+    <div class="q-text">仕事のやり方について、どんな状態が最も力を発揮できますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q18" value="AU5" onchange="tick()"><span class="opt-text">目標だけ与えられ、プロセスは自分で決められる</span></label>
+      <label class="opt"><input type="radio" name="q18" value="GM3" onchange="tick()"><span class="opt-text">チームで議論しながら方向性を決めていける</span></label>
+      <label class="opt"><input type="radio" name="q18" value="TF3" onchange="tick()"><span class="opt-text">専門領域に集中できる明確な役割分担がある</span></label>
+      <label class="opt"><input type="radio" name="q18" value="CH3" onchange="tick()"><span class="opt-text">変化が多く、臨機応変に対応が求められる</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#F1EFE8;color:#444441">4</div>
+    <div><div class="sec-title">安全・安定への志向</div><div class="sec-sub">Security / Stability</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q19</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">転職・異動・新プロジェクトを打診されたとき、最初に考えることはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q19" value="SE5" onchange="tick()"><span class="opt-text">将来的な安定・雇用保障はどうなるか</span></label>
+      <label class="opt"><input type="radio" name="q19" value="TF3" onchange="tick()"><span class="opt-text">専門スキルをどれだけ活かせるか・高められるか</span></label>
+      <label class="opt"><input type="radio" name="q19" value="GM3" onchange="tick()"><span class="opt-text">どの程度のポジション・権限が与えられるか</span></label>
+      <label class="opt"><input type="radio" name="q19" value="CH3" onchange="tick()"><span class="opt-text">どれだけ挑戦的で成長できる仕事か</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q20</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">報酬・待遇について最も優先することはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q20" value="SE5" onchange="tick()"><span class="opt-text">長期的に安定した収入・福利厚生</span></label>
+      <label class="opt"><input type="radio" name="q20" value="GM3" onchange="tick()"><span class="opt-text">実績・責任に応じた高い報酬</span></label>
+      <label class="opt"><input type="radio" name="q20" value="AU3" onchange="tick()"><span class="opt-text">時間や場所の自由が確保されている</span></label>
+      <label class="opt"><input type="radio" name="q20" value="SV3" onchange="tick()"><span class="opt-text">やりがい・社会貢献度が高ければ報酬は二の次</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q21</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">組織への帰属意識についてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q21" value="SE5" onchange="tick()"><span class="opt-text">一つの組織に長く貢献し、そこに根を張りたい</span></label>
+      <label class="opt"><input type="radio" name="q21" value="AU3" onchange="tick()"><span class="opt-text">特定の組織への依存より自分の市場価値を高めたい</span></label>
+      <label class="opt"><input type="radio" name="q21" value="EN3" onchange="tick()"><span class="opt-text">組織よりも自分のビジョンの実現が優先</span></label>
+      <label class="opt"><input type="radio" name="q21" value="SV3" onchange="tick()"><span class="opt-text">使命に共感できる組織なら深くコミットしたい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q22</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">リスクへの向き合い方で最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q22" value="SE5" onchange="tick()"><span class="opt-text">リスクは最小化し、着実に進む方が好き</span></label>
+      <label class="opt"><input type="radio" name="q22" value="CH3" onchange="tick()"><span class="opt-text">リスクがあってもやりがいがあれば挑戦する</span></label>
+      <label class="opt"><input type="radio" name="q22" value="EN3" onchange="tick()"><span class="opt-text">高いリスクと高いリターンの方が燃える</span></label>
+      <label class="opt"><input type="radio" name="q22" value="TF3" onchange="tick()"><span class="opt-text">専門的判断でリスクを管理しながら進める</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q23</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">仕事上の不確実性についてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q23" value="SE5" onchange="tick()"><span class="opt-text">できるだけ予測可能で見通しの立つ状況がよい</span></label>
+      <label class="opt"><input type="radio" name="q23" value="CH3" onchange="tick()"><span class="opt-text">不確実性こそがやりがいの源泉だと感じる</span></label>
+      <label class="opt"><input type="radio" name="q23" value="AU3" onchange="tick()"><span class="opt-text">自分でコントロールできる範囲なら不確実でも構わない</span></label>
+      <label class="opt"><input type="radio" name="q23" value="GM3" onchange="tick()"><span class="opt-text">組織として対応方針を決めた上で動くのが好き</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q24</span><span class="q-tag" style="background:#F1EFE8;color:#444441">安定</span></div>
+    <div class="q-text">会社の方向性が大きく変わりそうなとき、あなたはどう反応しますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q24" value="SE5" onchange="tick()"><span class="opt-text">自分の立場や処遇への影響をまず確認したい</span></label>
+      <label class="opt"><input type="radio" name="q24" value="CH3" onchange="tick()"><span class="opt-text">変化はチャンスと捉え、積極的に関わりたい</span></label>
+      <label class="opt"><input type="radio" name="q24" value="GM3" onchange="tick()"><span class="opt-text">変革の方向性を理解し、自分が貢献できる役割を探す</span></label>
+      <label class="opt"><input type="radio" name="q24" value="TF3" onchange="tick()"><span class="opt-text">自分の専門性が活きる場所を確保できるか確認する</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#EEEDFE;color:#534AB7">5</div>
+    <div><div class="sec-title">起業家的創造性への志向</div><div class="sec-sub">Entrepreneurial Creativity</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q25</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">新しいビジネスやサービスのアイデアを考えることについてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q25" value="EN5" onchange="tick()"><span class="opt-text">強いワクワクを感じる。常に考えている</span></label>
+      <label class="opt"><input type="radio" name="q25" value="TF3" onchange="tick()"><span class="opt-text">面白いと思うが、実現より研究・分析が好き</span></label>
+      <label class="opt"><input type="radio" name="q25" value="GM3" onchange="tick()"><span class="opt-text">良いアイデアなら組織として実行したい</span></label>
+      <label class="opt"><input type="radio" name="q25" value="SE3" onchange="tick()"><span class="opt-text">リスクが大きそうで慎重に考えてしまう</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q26</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">既存のやり方に対してどういうスタンスを持ちますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q26" value="EN5" onchange="tick()"><span class="opt-text">現状維持に違和感を覚え、変えたい衝動がある</span></label>
+      <label class="opt"><input type="radio" name="q26" value="TF3" onchange="tick()"><span class="opt-text">データや根拠をもとに改善の余地を探る</span></label>
+      <label class="opt"><input type="radio" name="q26" value="SE3" onchange="tick()"><span class="opt-text">実績あるやり方は尊重して引き継ぐべきだと思う</span></label>
+      <label class="opt"><input type="radio" name="q26" value="GM3" onchange="tick()"><span class="opt-text">組織の合意形成のもとで変えていくのが正しい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q27</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">自分の仕事の成果に対してどんな実感を求めますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q27" value="EN5" onchange="tick()"><span class="opt-text">自分がゼロから作り出したものが世の中に存在する感覚</span></label>
+      <label class="opt"><input type="radio" name="q27" value="GM3" onchange="tick()"><span class="opt-text">組織の成果に自分が貢献したという達成感</span></label>
+      <label class="opt"><input type="radio" name="q27" value="SV3" onchange="tick()"><span class="opt-text">誰かの役に立てた・喜ばれたという実感</span></label>
+      <label class="opt"><input type="radio" name="q27" value="TF3" onchange="tick()"><span class="opt-text">専門家として最高品質の仕事をやり遂げた充実感</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q28</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">副業・起業・社内新規事業についてどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q28" value="EN5" onchange="tick()"><span class="opt-text">自分の事業を持つことは強い関心・目標のひとつ</span></label>
+      <label class="opt"><input type="radio" name="q28" value="TF3" onchange="tick()"><span class="opt-text">専門スキルを活かした独立なら考えられる</span></label>
+      <label class="opt"><input type="radio" name="q28" value="SE3" onchange="tick()"><span class="opt-text">安定性が担保できないので積極的ではない</span></label>
+      <label class="opt"><input type="radio" name="q28" value="GM3" onchange="tick()"><span class="opt-text">組織の中でイノベーションを起こす方が自分に合っている</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q29</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">失敗のリスクを考えたとき、あなたはどう行動しますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q29" value="EN5" onchange="tick()"><span class="opt-text">失敗を恐れず、大きな可能性があるなら挑戦する</span></label>
+      <label class="opt"><input type="radio" name="q29" value="CH3" onchange="tick()"><span class="opt-text">困難なほどやりがいを感じるので挑戦したい</span></label>
+      <label class="opt"><input type="radio" name="q29" value="SE3" onchange="tick()"><span class="opt-text">失敗のリスクを最小化できる方法を先に探す</span></label>
+      <label class="opt"><input type="radio" name="q29" value="TF3" onchange="tick()"><span class="opt-text">専門的な分析で成功確率を高めてから動く</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q30</span><span class="q-tag" style="background:#EEEDFE;color:#534AB7">起業</span></div>
+    <div class="q-text">10年後の自分として最も近いイメージはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q30" value="EN5" onchange="tick()"><span class="opt-text">自分が立ち上げた事業・プロダクトが存在している</span></label>
+      <label class="opt"><input type="radio" name="q30" value="TF3" onchange="tick()"><span class="opt-text">業界をリードするプロフェッショナルとして活躍している</span></label>
+      <label class="opt"><input type="radio" name="q30" value="GM3" onchange="tick()"><span class="opt-text">組織を率いる立場でビジョンを体現している</span></label>
+      <label class="opt"><input type="radio" name="q30" value="LS3" onchange="tick()"><span class="opt-text">仕事もプライベートも充実した人生を生きている</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#EAF3DE;color:#3B6D11">6</div>
+    <div><div class="sec-title">奉仕・社会貢献への志向</div><div class="sec-sub">Service / Dedication to a Cause</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q31</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">仕事を選ぶとき、最も重視する基準はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q31" value="SV5" onchange="tick()"><span class="opt-text">社会・人・環境に良い影響を与えられるか</span></label>
+      <label class="opt"><input type="radio" name="q31" value="TF3" onchange="tick()"><span class="opt-text">自分の専門性を最大限活かせるか</span></label>
+      <label class="opt"><input type="radio" name="q31" value="GM3" onchange="tick()"><span class="opt-text">キャリアアップ・成長機会があるか</span></label>
+      <label class="opt"><input type="radio" name="q31" value="SE3" onchange="tick()"><span class="opt-text">安定性・将来性があるか</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q32</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">「なぜその仕事をしているのか」と聞かれたとき、どう答えたいですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q32" value="SV5" onchange="tick()"><span class="opt-text">社会や人の役に立てる仕事だから</span></label>
+      <label class="opt"><input type="radio" name="q32" value="TF3" onchange="tick()"><span class="opt-text">自分の専門性を活かし、成長できるから</span></label>
+      <label class="opt"><input type="radio" name="q32" value="EN3" onchange="tick()"><span class="opt-text">自分のビジョンを実現できる場だから</span></label>
+      <label class="opt"><input type="radio" name="q32" value="LS3" onchange="tick()"><span class="opt-text">充実した人生を送るための手段だから</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q33</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">職場での役割として、最も充実感を感じるのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q33" value="SV5" onchange="tick()"><span class="opt-text">人の悩みを解決したり、成長を支援したりすること</span></label>
+      <label class="opt"><input type="radio" name="q33" value="TF3" onchange="tick()"><span class="opt-text">専門知識で高品質な成果を生み出すこと</span></label>
+      <label class="opt"><input type="radio" name="q33" value="GM3" onchange="tick()"><span class="opt-text">チームをまとめ、組織として成果を上げること</span></label>
+      <label class="opt"><input type="radio" name="q33" value="CH3" onchange="tick()"><span class="opt-text">困難な課題を乗り越え、突破口を開くこと</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q34</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">仕事で「意味・意義」を感じる瞬間はどんなときですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q34" value="SV5" onchange="tick()"><span class="opt-text">自分の仕事が誰かを助けたり、笑顔にできたとき</span></label>
+      <label class="opt"><input type="radio" name="q34" value="TF3" onchange="tick()"><span class="opt-text">スキルや専門性が認められ、評価されたとき</span></label>
+      <label class="opt"><input type="radio" name="q34" value="EN3" onchange="tick()"><span class="opt-text">自分が考えたアイデアが形になったとき</span></label>
+      <label class="opt"><input type="radio" name="q34" value="GM3" onchange="tick()"><span class="opt-text">自分の判断や行動が組織の成果につながったとき</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q35</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">給与が同じなら、どんな仕事を選びますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q35" value="SV5" onchange="tick()"><span class="opt-text">社会貢献度が高く、誰かの生活を改善できる仕事</span></label>
+      <label class="opt"><input type="radio" name="q35" value="TF3" onchange="tick()"><span class="opt-text">高い専門性が求められ、腕を磨ける仕事</span></label>
+      <label class="opt"><input type="radio" name="q35" value="CH3" onchange="tick()"><span class="opt-text">難易度が高く、解決したときの達成感が大きい仕事</span></label>
+      <label class="opt"><input type="radio" name="q35" value="LS3" onchange="tick()"><span class="opt-text">プライベートと両立しやすい働き方ができる仕事</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q36</span><span class="q-tag" style="background:#EAF3DE;color:#3B6D11">貢献</span></div>
+    <div class="q-text">ボランティアやNPO・社会起業などの活動に対してどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q36" value="SV5" onchange="tick()"><span class="opt-text">強い共感を感じる。仕事でも社会課題に取り組みたい</span></label>
+      <label class="opt"><input type="radio" name="q36" value="TF3" onchange="tick()"><span class="opt-text">専門スキルを活かした形で関わるなら興味がある</span></label>
+      <label class="opt"><input type="radio" name="q36" value="SE3" onchange="tick()"><span class="opt-text">本業に影響しない範囲で関わるなら良いと思う</span></label>
+      <label class="opt"><input type="radio" name="q36" value="EN3" onchange="tick()"><span class="opt-text">社会課題をビジネスとして解決することに関心がある</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 7 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#FAECE7;color:#993C1D">7</div>
+    <div><div class="sec-title">純粋な挑戦への志向</div><div class="sec-sub">Pure Challenge</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q37</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">仕事で最もモチベーションが上がる状況はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q37" value="CH5" onchange="tick()"><span class="opt-text">誰も解決できていない難問に自分が挑んでいる状況</span></label>
+      <label class="opt"><input type="radio" name="q37" value="TF3" onchange="tick()"><span class="opt-text">専門スキルをフル活用する高度な仕事をしている状況</span></label>
+      <label class="opt"><input type="radio" name="q37" value="SV3" onchange="tick()"><span class="opt-text">自分の仕事が誰かの役に立っていると実感できる状況</span></label>
+      <label class="opt"><input type="radio" name="q37" value="AU3" onchange="tick()"><span class="opt-text">自分の裁量でのびのびと仕事を進めている状況</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q38</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">困難な状況に置かれたとき、どんな感情が先に来ますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q38" value="CH5" onchange="tick()"><span class="opt-text">「やってやろう」という闘争心・高揚感</span></label>
+      <label class="opt"><input type="radio" name="q38" value="SE3" onchange="tick()"><span class="opt-text">「リスクを最小化しなければ」という危機感</span></label>
+      <label class="opt"><input type="radio" name="q38" value="GM3" onchange="tick()"><span class="opt-text">「チームで対策を立てよう」という統率意識</span></label>
+      <label class="opt"><input type="radio" name="q38" value="TF3" onchange="tick()"><span class="opt-text">「原因を分析して解決策を考えよう」という冷静な思考</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q39</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">ルーティンワークが続いたとき、どう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q39" value="CH5" onchange="tick()"><span class="opt-text">強い退屈感・物足りなさを感じる</span></label>
+      <label class="opt"><input type="radio" name="q39" value="SE3" onchange="tick()"><span class="opt-text">安定していて安心できると感じる</span></label>
+      <label class="opt"><input type="radio" name="q39" value="TF3" onchange="tick()"><span class="opt-text">品質を高める工夫ができれば満足できる</span></label>
+      <label class="opt"><input type="radio" name="q39" value="LS3" onchange="tick()"><span class="opt-text">プライベートに時間を使えるので悪くない</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q40</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">競争について、あなたはどう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q40" value="CH5" onchange="tick()"><span class="opt-text">競争は大歓迎。勝ちたいという意欲が湧く</span></label>
+      <label class="opt"><input type="radio" name="q40" value="GM3" onchange="tick()"><span class="opt-text">チームとして競い、組織の勝利として捉えたい</span></label>
+      <label class="opt"><input type="radio" name="q40" value="SV3" onchange="tick()"><span class="opt-text">競争より協力・共創の方が好き</span></label>
+      <label class="opt"><input type="radio" name="q40" value="AU3" onchange="tick()"><span class="opt-text">他者との比較より自分自身の成長に集中したい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q41</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">過去に仕事で最も燃えた経験はどんな状況でしたか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q41" value="CH5" onchange="tick()"><span class="opt-text">ギリギリのプレッシャーの中で問題を解決したとき</span></label>
+      <label class="opt"><input type="radio" name="q41" value="TF3" onchange="tick()"><span class="opt-text">自分の専門性が決め手になって成果が出たとき</span></label>
+      <label class="opt"><input type="radio" name="q41" value="EN3" onchange="tick()"><span class="opt-text">自分のアイデアが実現して世に出たとき</span></label>
+      <label class="opt"><input type="radio" name="q41" value="SV3" onchange="tick()"><span class="opt-text">誰かの人生に良い変化をもたらせたとき</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q42</span><span class="q-tag" style="background:#FAECE7;color:#993C1D">挑戦</span></div>
+    <div class="q-text">難易度の設定として最もパフォーマンスが出るのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q42" value="CH5" onchange="tick()"><span class="opt-text">限界に近い高難易度。それでこそ燃える</span></label>
+      <label class="opt"><input type="radio" name="q42" value="TF3" onchange="tick()"><span class="opt-text">専門性を活かせるちょうどよいレベル</span></label>
+      <label class="opt"><input type="radio" name="q42" value="SE3" onchange="tick()"><span class="opt-text">確実に達成できる現実的なレベル</span></label>
+      <label class="opt"><input type="radio" name="q42" value="GM3" onchange="tick()"><span class="opt-text">チームで協力すれば届くストレッチレベル</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 8 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#FBEAF0;color:#993556">8</div>
+    <div><div class="sec-title">ライフスタイルへの志向</div><div class="sec-sub">Lifestyle Integration</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q43</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">仕事と私生活の優先順位についてどのように考えますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q43" value="LS5" onchange="tick()"><span class="opt-text">どちらも大切。互いに充実させることが理想</span></label>
+      <label class="opt"><input type="radio" name="q43" value="CH3" onchange="tick()"><span class="opt-text">仕事に情熱をかけることこそが自分らしい</span></label>
+      <label class="opt"><input type="radio" name="q43" value="SE3" onchange="tick()"><span class="opt-text">安定した収入が確保できれば、私生活を重視したい</span></label>
+      <label class="opt"><input type="radio" name="q43" value="SV3" onchange="tick()"><span class="opt-text">使命感ある仕事に人生をかけることに意味がある</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q44</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">残業・休日出勤が増えそうな状況になったとき、どう感じますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q44" value="LS5" onchange="tick()"><span class="opt-text">プライベートへの影響が大きくストレスになる</span></label>
+      <label class="opt"><input type="radio" name="q44" value="CH3" onchange="tick()"><span class="opt-text">大事な局面なら喜んで向き合える</span></label>
+      <label class="opt"><input type="radio" name="q44" value="SE3" onchange="tick()"><span class="opt-text">超過分の補償・代休が確保されれば納得できる</span></label>
+      <label class="opt"><input type="radio" name="q44" value="GM3" onchange="tick()"><span class="opt-text">チームや組織のためなら一定の犠牲は仕方ない</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q45</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">「理想の人生」を表現するとしたら、最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q45" value="LS5" onchange="tick()"><span class="opt-text">仕事・家族・趣味が調和した豊かな生活</span></label>
+      <label class="opt"><input type="radio" name="q45" value="CH3" onchange="tick()"><span class="opt-text">一つのことに本気で挑み続けた充実した日々</span></label>
+      <label class="opt"><input type="radio" name="q45" value="EN3" onchange="tick()"><span class="opt-text">自分のビジョンを実現した、誰かの記憶に残る人生</span></label>
+      <label class="opt"><input type="radio" name="q45" value="SV3" onchange="tick()"><span class="opt-text">社会に貢献し、感謝される人生</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q46</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">居住地・転勤・リモートワークについてどのように考えますか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q46" value="LS5" onchange="tick()"><span class="opt-text">家族や生活基盤を重視した環境選びをしたい</span></label>
+      <label class="opt"><input type="radio" name="q46" value="AU3" onchange="tick()"><span class="opt-text">場所にとらわれない自由な働き方をしたい</span></label>
+      <label class="opt"><input type="radio" name="q46" value="GM3" onchange="tick()"><span class="opt-text">キャリアに必要なら転勤・異動も受け入れる</span></label>
+      <label class="opt"><input type="radio" name="q46" value="SE3" onchange="tick()"><span class="opt-text">生活環境が安定していることを優先したい</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q47</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">仕事における「成功」の定義として最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q47" value="LS5" onchange="tick()"><span class="opt-text">仕事も私生活も満たされた状態にあること</span></label>
+      <label class="opt"><input type="radio" name="q47" value="GM3" onchange="tick()"><span class="opt-text">組織の中で高い地位と影響力を持つこと</span></label>
+      <label class="opt"><input type="radio" name="q47" value="TF3" onchange="tick()"><span class="opt-text">その分野で第一人者として認められること</span></label>
+      <label class="opt"><input type="radio" name="q47" value="SV3" onchange="tick()"><span class="opt-text">多くの人に感謝され、社会に貢献できていること</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q48</span><span class="q-tag" style="background:#FBEAF0;color:#993556">生活</span></div>
+    <div class="q-text">現在の会社・仕事に満足できない場合、最初に考える行動はどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q48" value="LS5" onchange="tick()"><span class="opt-text">ライフスタイルとのバランスが取れる環境に移る</span></label>
+      <label class="opt"><input type="radio" name="q48" value="TF3" onchange="tick()"><span class="opt-text">専門性を活かせる別の職場・役割を探す</span></label>
+      <label class="opt"><input type="radio" name="q48" value="EN3" onchange="tick()"><span class="opt-text">自分で事業を起こす・副業で挑戦してみる</span></label>
+      <label class="opt"><input type="radio" name="q48" value="GM3" onchange="tick()"><span class="opt-text">組織の中で状況を変えるための行動を起こす</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Section 9 -->
+<div class="section">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:#F1EFE8;color:#5F5E5A">9</div>
+    <div><div class="sec-title">総合価値観</div><div class="sec-sub">Integrated Values</div></div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q49</span><span class="q-tag" style="background:#F1EFE8;color:#5F5E5A">統合</span></div>
+    <div class="q-text">「仕事をする上での自分のアイデンティティ」として最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q49" value="TF5,AU3" onchange="tick()"><span class="opt-text">何かの分野に深く精通したプロフェッショナル</span></label>
+      <label class="opt"><input type="radio" name="q49" value="GM5,EC3" onchange="tick()"><span class="opt-text">人と組織を動かすリーダー</span></label>
+      <label class="opt"><input type="radio" name="q49" value="EN5,CH3" onchange="tick()"><span class="opt-text">ゼロから価値を生み出すクリエイター・起業家</span></label>
+      <label class="opt"><input type="radio" name="q49" value="SV5,LS3" onchange="tick()"><span class="opt-text">社会・人の課題に真剣に向き合う貢献者</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-meta"><span class="q-num">Q50</span><span class="q-tag" style="background:#F1EFE8;color:#5F5E5A">統合</span></div>
+    <div class="q-text">モチベーションが最も高い状態に最も近いのはどれですか？</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q50" value="TF5,CH3" onchange="tick()"><span class="opt-text">自分のスキルが存分に問われる高度な仕事に没頭しているとき</span></label>
+      <label class="opt"><input type="radio" name="q50" value="GM5,SV3" onchange="tick()"><span class="opt-text">自分が率いるチームが目標に向かって動いているとき</span></label>
+      <label class="opt"><input type="radio" name="q50" value="EN5,AU3" onchange="tick()"><span class="opt-text">自分のアイデアを自分のやり方で形にしているとき</span></label>
+      <label class="opt"><input type="radio" name="q50" value="SV5,LS3" onchange="tick()"><span class="opt-text">大切な誰かのために自分の仕事が役立っているとき</span></label>
+    </div>
+  </div>
+</div>
+
+<div class="btn-wrap">
+  <button class="btn-analyze" onclick="analyze()">価値観を分析する →</button>
+</div>
+
+<!-- Result -->
+<div class="result" id="result">
+  <div class="result-hero">
+    <div class="result-eyebrow">Analysis Result</div>
+    <div class="result-title" id="r-title">あなたの価値観プロフィール</div>
+    <div class="result-sub" id="r-sub"></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">キャリアアンカー 優先順位</div>
+    <div id="priority-list"></div>
+  </div>
+
+  <div class="top-anchor" id="top-anchor">
+    <div class="top-badge" id="top-badge"></div>
+    <div class="top-name" id="top-name"></div>
+    <div class="top-desc" id="top-desc"></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">あなたのモチベーション動機</div>
+    <div id="moti-list"></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">価値観に基づいたアドバイス</div>
+    <div id="advice-list"></div>
+  </div>
+
+  <p class="print-note">Ctrl+P（Mac: Cmd+P）で印刷・PDF保存できます</p>
+</div>
+
+</div>
+
+<script>
+const ANCHORS = {
+  TF:{name:'技術・専門能力',en:'Technical / Functional',col:'#E1F5EE',txt:'#0F6E56',bar:'#0F6E56',
+    desc:'特定の専門分野で卓越した能力を発揮することに最も価値を置きます。「プロとして認められたい」「深く極めたい」という欲求が根底にあります。管理職より第一線のプロとして活躍し続けることに誇りを感じます。',
+    moti:['専門性が問われる高度な課題をアサインされるとモチベーションが大きく上がります。難易度の高い技術的問題や前例のない専門課題に取り組む機会を積極的に求めましょう。','「この分野はあなたに任せる」という信頼と権限が与えられる環境が最大の動機づけになります。自分の専門性が意思決定に直結するポジションを目指しましょう。','資格取得・外部登壇・論文執筆など、専門性を対外的に証明するアクションがモチベーションを持続させます。'],
+    advice:['専門領域でのインプット・アウトプットを定期的に行い、「この分野の第一人者」に向けたロードマップを描きましょう。','管理職への打診には慎重に。専門職としてのトラックを歩む選択肢が自分らしいキャリアにつながる可能性が高いです。','専門知識を組織・チームに還元する仕組みをつくると、やりがいと評価が両立します。']},
+  GM:{name:'経営管理・リーダーシップ',en:'General Managerial',col:'#E6F1FB',txt:'#185FA5',bar:'#185FA5',
+    desc:'組織全体を統括し、複数の機能や人を束ねて成果を出すことに喜びを感じます。「影響力を持ちたい」「大きな意思決定をしたい」という欲求が根底にあります。責任と権限が大きくなるほど力を発揮します。',
+    moti:['組織全体の目標・方向性に自分の判断が直接影響できる立場にいることがモチベーションの源泉です。','部下・後輩の成長を通じて組織の成果が上がる実感が強いエネルギーになります。','昇進・権限拡大などポジションとしての成長が明確に見えているとき、意欲が高まります。'],
+    advice:['リーダーシップを発揮できる機会（プロジェクトリード・チームマネジメント）を積極的に取りに行きましょう。','組織の大局的な課題を自ら定義し、解決に向けた動きをとる姿勢がキャリアを加速させます。','専門性を深めつつ多機能な視点を養うことがゼネラルマネジャーへの近道です。']},
+  AU:{name:'自律性・独立性',en:'Autonomy / Independence',col:'#FAEEDA',txt:'#854F0B',bar:'#854F0B',
+    desc:'自分のペース・スタイルで仕事を進めることを最も重視します。組織の制約や細かい管理が強いストレス源になります。結果への責任は取るが、プロセスへの干渉は最小化したいという価値観が根底にあります。',
+    moti:['目標だけ設定され、プロセスは自分で設計できる環境が最大のモチベーション要因です。','リモートワーク・フレックス・裁量労働など、時間と場所の自由度が高い環境で力を発揮します。','自分のペースで深く集中できる時間が確保されているとき、最高のパフォーマンスが出ます。'],
+    advice:['裁量の大きい仕事・役割を意識的に選ぶことが重要です。指示待ちではなく自ら提案・設計する姿勢を習慣化しましょう。','副業・フリーランス・社内起業など、組織の外の選択肢を将来的に視野に入れておくと選択肢が広がります。','自律的に働くためには成果を明確に示す力（自己PR・数値化）が必要です。アウトプットの見せ方を磨きましょう。']},
+  SE:{name:'安全・安定',en:'Security / Stability',col:'#F1EFE8',txt:'#444441',bar:'#5F5E5A',
+    desc:'長期的な雇用・収入・環境の安定を強く重視します。リスクを最小化し、予測可能なキャリアを歩むことに価値を置きます。安定基盤があってこそ実力を発揮できるという価値観が根底にあります。',
+    moti:['明確な評価基準・フィードバックの仕組みがある環境でモチベーションが安定します。','長期的なキャリアビジョンと現在の仕事のつながりが見えているときに意欲が高まります。','変化のスピードが急すぎない、方針が安定した組織での仕事に充実感を感じます。'],
+    advice:['安定志向を強みとして活かすには、組織の継続的な改善・品質維持を担うポジションが適しています。','中長期のキャリアプランを描き、上司・人事との1on1でキャリア相談を定期的に行いましょう。','リスク管理・品質保証・標準化など、安定を価値に変える専門領域を見つけると強みが磨かれます。']},
+  EN:{name:'起業家的創造性',en:'Entrepreneurial Creativity',col:'#EEEDFE',txt:'#534AB7',bar:'#534AB7',
+    desc:'新しい事業・サービス・仕組みをゼロから生み出すことに強い欲求を感じます。「自分のビジョンで世界を変えたい」「自分の手でつくった何かを残したい」という衝動が根底にあります。',
+    moti:['ゼロイチ、つまり何もないところから新しいものを生み出すプロセスに最大の喜びを感じます。','自分のアイデアが承認される・実行に移される・市場で評価されるという体験が強い動機づけになります。','社内でも新規事業・新プロダクトなど「今ないものをつくる」機会があるとモチベーションが急上昇します。'],
+    advice:['アイデアを「検証→実行→改善」のサイクルで動かす習慣をつけましょう。小さく試すことを恐れないことが大切です。','社内新規事業・副業・スタートアップへの転職など、ゼロイチを経験できる場を意図的に作りましょう。','創造するためには「問いを立てる力」が重要です。日常の課題観察と仮説思考を鍛えましょう。']},
+  SV:{name:'奉仕・社会貢献',en:'Service / Dedication',col:'#EAF3DE',txt:'#3B6D11',bar:'#3B6D11',
+    desc:'仕事を通じて社会・人・世界に良い影響を与えることを最優先の価値とします。「誰かの役に立てているか」が仕事への意欲を左右します。給与や地位より「意義・使命感」を重視します。',
+    moti:['自分の仕事が誰かの生活・感情・状況を良くしていると実感できるとき、強いエネルギーが生まれます。','「ありがとう」と感謝される体験・顧客や受益者の変化を直接見聞きできる機会がモチベーションを高めます。','会社のミッション・社会的意義に共感できているとき、長期的にやる気が持続します。'],
+    advice:['自分の仕事と「誰が・どう助かっているか」を常に結びつけて考える習慣をつけましょう。','社会課題解決型の事業・NPO・社内CSR活動など、貢献が可視化される機会を積極的に作りましょう。','燃え尽き（バーンアウト）に注意。使命感が強いほど消耗するリスクがあります。自分のケアも優先しましょう。']},
+  CH:{name:'純粋な挑戦',en:'Pure Challenge',col:'#FAECE7',txt:'#993C1D',bar:'#993C1D',
+    desc:'難問・競争・プレッシャーそのものを求め、それを乗り越えることに最大の喜びを感じます。「やりがい＝困難の大きさ」という価値観が根底にあります。ルーティンや安定より常に次の壁を求めます。',
+    moti:['難易度が高く、解決困難な課題をアサインされることがモチベーションの最大の燃料です。','目に見える競争・勝ち負けがある状況でパフォーマンスが上がります。','プレッシャーのかかる締め切り・厳しい評価の場・他者との切磋琢磨がエネルギー源になります。'],
+    advice:['常に「今の自分の限界を少し超えた目標」を設定しましょう。快適ゾーンに留まると急速にモチベーションが落ちます。','「最難関のポジション」「最も難しいプロジェクト」を自ら志願する姿勢がキャリアの加速につながります。','競争心をチームの力に転換する意識も重要です。「個人で勝つ」から「チームで難敵に挑む」へ発展させましょう。']},
+  LS:{name:'ライフスタイル統合',en:'Lifestyle Integration',col:'#FBEAF0',txt:'#993556',bar:'#993556',
+    desc:'仕事と個人の生活・家族・趣味を統合した「全体としての豊かさ」を最も重視します。仕事はその一部であり、生活全体のバランスが崩れると持続的なパフォーマンスが発揮できません。',
+    moti:['仕事とプライベートのバランスが保たれているとき、仕事への集中度と意欲も高まります。','家族・大切な人との時間を大切にできる環境があることが、仕事の持続的なモチベーションの土台です。','働き方の柔軟性（時間・場所・休暇）が確保されているとき、パフォーマンスが安定します。'],
+    advice:['「仕事のため」に生活を犠牲にする環境は長期的に機能しません。ライフスタイルを優先できる職場を意図的に選びましょう。','仕事の充実度はプライベートの充実度と連動します。趣味・健康・人間関係への投資が結果的にパフォーマンスを上げます。','「人生全体の設計」から逆算してキャリアを考える視点を持つと、無理のない持続的な成長ができます。']},
+};
+
+function tick() {
+  const answered = new Set();
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r => answered.add(r.name));
+  const pct = Math.round(answered.size / 50 * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-txt').textContent = answered.size + ' / 50';
+}
+
+function parseVal(val) {
+  const scores = {};
+  val.split(',').forEach(part => {
+    const m = part.match(/^([A-Z]+)(\d)$/);
+    if (m && ANCHORS[m[1]]) scores[m[1]] = (scores[m[1]] || 0) + parseInt(m[2]);
+  });
+  return scores;
+}
+
+function analyze() {
+  const totals = {TF:0,GM:0,AU:0,SE:0,EN:0,SV:0,CH:0,LS:0};
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+    const s = parseVal(r.value);
+    Object.entries(s).forEach(([k,v]) => { if (totals[k] !== undefined) totals[k] += v; });
+  });
+
+  const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1]);
+  const maxScore = Math.max(...Object.values(totals)) || 1;
+
+  const prEl = document.getElementById('priority-list');
+  prEl.innerHTML = '';
+  sorted.forEach(([key, val], i) => {
+    const a = ANCHORS[key];
+    const pct = Math.round(val / maxScore * 100);
+    prEl.innerHTML += `
+      <div class="priority-row">
+        <div class="pr-rank" style="background:${a.col};color:${a.txt}">${i+1}</div>
+        <div class="pr-info">
+          <div class="pr-name">${a.name}</div>
+          <div class="pr-en">${a.en}</div>
+        </div>
+        <div class="pr-bar-wrap">
+          <div class="pr-bar-bg"><div class="pr-bar-fill" style="width:${pct}%;background:${a.bar}"></div></div>
+        </div>
+        <div class="pr-score">${val}pt</div>
+      </div>`;
+  });
+
+  const [topKey] = sorted[0];
+  const ta = ANCHORS[topKey];
+  const [secKey] = sorted[1];
+  const sa = ANCHORS[secKey];
+
+  document.getElementById('top-badge').textContent = '主アンカー：' + ta.name;
+  document.getElementById('top-badge').style.background = ta.col;
+  document.getElementById('top-badge').style.color = ta.txt;
+  document.getElementById('top-name').textContent = ta.name + ' 型';
+  document.getElementById('top-desc').textContent = ta.desc;
+
+  document.getElementById('r-sub').textContent = `主アンカー「${ta.name}」、副アンカー「${sa.name}」の組み合わせです。`;
+
+  const moEl = document.getElementById('moti-list');
+  moEl.innerHTML = '';
+  ta.moti.forEach((m, i) => {
+    moEl.innerHTML += `<div class="moti-item"><div class="moti-n">0${i+1}</div><div class="moti-t">${m}</div></div>`;
+  });
+
+  const adEl = document.getElementById('advice-list');
+  adEl.innerHTML = '';
+  [...ta.advice, sa.advice[0]].forEach((a, i) => {
+    const color = i < ta.advice.length ? ta.bar : sa.bar;
+    adEl.innerHTML += `<div class="advice-item"><div class="advice-dot" style="background:${color}"></div><div class="advice-t">${a}</div></div>`;
+  });
+
+  const r = document.getElementById('result');
+  r.classList.add('show');
+  setTimeout(() => r.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+</script>
+</body>
+</html>
